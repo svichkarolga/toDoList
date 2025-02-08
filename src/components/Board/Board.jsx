@@ -30,6 +30,26 @@ const Board = ({ searchQuery }) => {
     );
   };
 
+  const handleEditTask = (updatedTask) => {
+    setColumns((prevColumns) =>
+      prevColumns.map((column) => ({
+        ...column,
+        tasks: column.tasks.map((task) =>
+          task.id === updatedTask.id ? updatedTask : task
+        ),
+      }))
+    );
+  };
+
+  const handleDeleteTask = (taskId) => {
+    setColumns((prevColumns) =>
+      prevColumns.map((column) => ({
+        ...column,
+        tasks: column.tasks.filter((task) => task.id !== taskId),
+      }))
+    );
+  };
+
   const handleDropTask = (task, targetColumnName) => {
     setColumns((prevColumns) =>
       prevColumns.map((column) => {
@@ -76,6 +96,8 @@ const Board = ({ searchQuery }) => {
           name={column.name}
           tasks={column.tasks}
           onAddTask={(task) => addTaskToColumn(column.name, task)}
+          onEditTask={handleEditTask}
+          onDeleteTask={handleDeleteTask}
           onDropTask={handleDropTask}
           onDragStart={handleDragStart}
         />

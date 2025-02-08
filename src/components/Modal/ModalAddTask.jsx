@@ -55,10 +55,10 @@ const ModalAdd = ({ open, onClose, onSave }) => {
 
   const handleSave = () => {
     if (task && description) {
-      onSave(task, description); // Передаємо дані у функцію-збереження
-      setTask(""); // Очищаємо поле "Task"
-      setDescription(""); // Очищаємо поле "Description"
-      onClose(); // Закриваємо модалку
+      onSave(task, description);
+      setTask("");
+      setDescription("");
+      onClose();
     }
   };
 

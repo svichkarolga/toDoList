@@ -31,65 +31,70 @@ const StyledDialogActions = styled(DialogActions)({
   color: "#333",
 });
 const StyledCancelButton = styled(Button)({
-  backgroundColor: "##FAFAFA",
-  color: "#fff",
+  backgroundColor: "#FAFAFA",
+  color: "#333",
   "&:hover": {
-    backgroundColor: "##FAFAFA",
+    backgroundColor: "#E0E0E0",
   },
   padding: "8px 16px",
   fontWeight: "bold",
 });
 const StyledSaveButton = styled(Button)({
-  backgroundColor: "##FAFAFA",
+  backgroundColor: "#1976D2",
   color: "#fff",
   "&:hover": {
-    backgroundColor: "##FAFAFA",
+    backgroundColor: "#115293",
   },
   padding: "8px 16px",
   fontWeight: "bold",
 });
-const ModalEdit = ({ open, onClose, onSave, initialName, initialNumber }) => {
-  const [name, setName] = useState(initialName);
-  const [number, setNumber] = useState(initialNumber);
+
+const ModalEdit = ({ open, onClose, onSave, task }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
-    setName(initialName);
-    setNumber(initialNumber);
-  }, [initialName, initialNumber]);
+    if (task) {
+      setTitle(task.title);
+      setDescription(task.description);
+    }
+  }, [task]);
 
   const handleSave = () => {
-    onSave(name, number);
-    onClose();
+    if (title.trim() && description.trim()) {
+      onSave({ ...task, title, description }); // Передаємо ОНОВЛЕНЕ завдання
+      onClose();
+    }
   };
 
   return (
     <StyledDialog
       open={open}
       onClose={onClose}
-      aria-labelledby="edit-contact-dialog"
+      aria-labelledby="edit-task-dialog"
     >
-      <StyledDialogTitle>Edit task</StyledDialogTitle>
+      <StyledDialogTitle>Edit Task</StyledDialogTitle>
       <Box sx={{ padding: "0 20px" }}>
         <TextField
           label="Task"
           fullWidth
           margin="normal"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <TextField
           label="Description"
           fullWidth
           margin="normal"
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
       </Box>
       <StyledDialogActions>
         <StyledSaveButton variant="contained" onClick={handleSave}>
           Save
         </StyledSaveButton>
-        <StyledCancelButton variant="contained" onClick={onClose}>
+        <StyledCancelButton variant="outlined" onClick={onClose}>
           Cancel
         </StyledCancelButton>
       </StyledDialogActions>

@@ -10,7 +10,7 @@ import { styled } from "@mui/material/styles";
 
 const StyledDialog = styled(Dialog)({
   "& .MuiPaper-root": {
-    backgroundColor: "#e9f288",
+    backgroundColor: "#FAFAFA",
     borderRadius: "10px",
     padding: "20px",
     width: "400px",
@@ -30,19 +30,19 @@ const StyledDialogActions = styled(DialogActions)({
   color: "#333",
 });
 const StyledDeleteButton = styled(Button)({
-  backgroundColor: "#d32f2f",
-  color: "#fff",
+  backgroundColor: "#FAFAFA",
+  color: "#333",
   "&:hover": {
-    backgroundColor: "#c62828",
+    backgroundColor: "#E0E0E0",
   },
   padding: "8px 16px",
   fontWeight: "bold",
 });
 const StyledCancelButton = styled(Button)({
-  backgroundColor: "#0a0af2",
+  backgroundColor: "#1976D2",
   color: "#fff",
   "&:hover": {
-    backgroundColor: "#c62828",
+    backgroundColor: "#115293",
   },
   padding: "8px 16px",
   fontWeight: "bold",
