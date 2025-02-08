@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Column.module.css";
+import ModalAdd from "../Modal/ModalAddTask.jsx";
 
 const Column = ({ name, tasks, onAddTask, onDropTask, onDragStart }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newTask, setNewTask] = useState({ title: "", description: "" });
 
-  const handleAddTask = () => {
-    const title = prompt("Add new task");
-    const description = prompt("Enter the description of task");
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleSaveTask = (title, description) => {
     if (title && description) {
       onAddTask({ title, description });
     }
+    setIsModalOpen(false);
   };
 
   const handleDragOver = (event) => {
@@ -40,9 +48,16 @@ const Column = ({ name, tasks, onAddTask, onDropTask, onDragStart }) => {
         </div>
       ))}
       {name === "ToDo" && (
-        <button className={styles.button} onClick={handleAddTask}>
-          Add new task
-        </button>
+        <>
+          <button className={styles.button} onClick={handleOpenModal}>
+            Add new task
+          </button>
+          <ModalAdd
+            open={isModalOpen}
+            onClose={handleCloseModal}
+            onSave={handleSaveTask}
+          />
+        </>
       )}
     </div>
   );

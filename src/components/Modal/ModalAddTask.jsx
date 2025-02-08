@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -31,35 +31,35 @@ const StyledDialogActions = styled(DialogActions)({
   color: "#333",
 });
 const StyledCancelButton = styled(Button)({
-  backgroundColor: "##FAFAFA",
-  color: "#fff",
+  backgroundColor: "#FAFAFA",
+  color: "#333",
   "&:hover": {
-    backgroundColor: "##FAFAFA",
+    backgroundColor: "#E0E0E0",
   },
   padding: "8px 16px",
   fontWeight: "bold",
 });
 const StyledSaveButton = styled(Button)({
-  backgroundColor: "##FAFAFA",
+  backgroundColor: "#1976D2",
   color: "#fff",
   "&:hover": {
-    backgroundColor: "##FAFAFA",
+    backgroundColor: "#115293",
   },
   padding: "8px 16px",
   fontWeight: "bold",
 });
-const ModalEdit = ({ open, onClose, onSave, initialName, initialNumber }) => {
-  const [name, setName] = useState(initialName);
-  const [number, setNumber] = useState(initialNumber);
 
-  useEffect(() => {
-    setName(initialName);
-    setNumber(initialNumber);
-  }, [initialName, initialNumber]);
+const ModalAdd = ({ open, onClose, onSave }) => {
+  const [task, setTask] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSave = () => {
-    onSave(name, number);
-    onClose();
+    if (task && description) {
+      onSave(task, description); // Передаємо дані у функцію-збереження
+      setTask(""); // Очищаємо поле "Task"
+      setDescription(""); // Очищаємо поле "Description"
+      onClose(); // Закриваємо модалку
+    }
   };
 
   return (
@@ -68,28 +68,28 @@ const ModalEdit = ({ open, onClose, onSave, initialName, initialNumber }) => {
       onClose={onClose}
       aria-labelledby="add-task-dialog"
     >
-      <StyledDialogTitle>Add task</StyledDialogTitle>
+      <StyledDialogTitle>Add New Task</StyledDialogTitle>
       <Box sx={{ padding: "0 20px" }}>
         <TextField
           label="Task"
           fullWidth
           margin="normal"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
         />
         <TextField
           label="Description"
           fullWidth
           margin="normal"
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
       </Box>
       <StyledDialogActions>
         <StyledSaveButton variant="contained" onClick={handleSave}>
           Save
         </StyledSaveButton>
-        <StyledCancelButton variant="contained" onClick={onClose}>
+        <StyledCancelButton variant="outlined" onClick={onClose}>
           Cancel
         </StyledCancelButton>
       </StyledDialogActions>
@@ -97,4 +97,4 @@ const ModalEdit = ({ open, onClose, onSave, initialName, initialNumber }) => {
   );
 };
 
-export default ModalEdit;
+export default ModalAdd;
