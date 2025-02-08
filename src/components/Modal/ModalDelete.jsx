@@ -48,7 +48,7 @@ const StyledCancelButton = styled(Button)({
   fontWeight: "bold",
 });
 
-const ModalDelete = ({ open, onClose, onConfirm }) => {
+const ModalDelete = ({ open, onClose, onDelete }) => {
   return (
     <StyledDialog
       open={open}
@@ -65,7 +65,7 @@ const ModalDelete = ({ open, onClose, onConfirm }) => {
         </StyledCancelButton>
         <StyledDeleteButton
           onClick={() => {
-            onConfirm();
+            onDelete();
             onClose();
           }}
           color="primary"

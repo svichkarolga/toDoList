@@ -149,7 +149,7 @@ const Column = ({
         >
           <h4 className={styles.title}>Title: {task.title}</h4>
           <p className={styles.description}>Description: {task.description}</p>
-          <p className={styles.description}>Id: {task.id}</p>
+          <p className={styles.id}>Id: {task.id}</p>
 
           <button
             className={styles.editButton}

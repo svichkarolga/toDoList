@@ -62,7 +62,7 @@ const ModalEdit = ({ open, onClose, onSave, task }) => {
 
   const handleSave = () => {
     if (title.trim() && description.trim()) {
-      onSave({ ...task, title, description }); // Передаємо ОНОВЛЕНЕ завдання
+      onSave({ ...task, title, description });
       onClose();
     }
   };

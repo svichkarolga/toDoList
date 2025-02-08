@@ -4,6 +4,7 @@
   justify-content: center;
   flex-direction: row;
   width: auto;
+  background: transparent;
 }
 
 .container {
@@ -11,11 +12,10 @@
   align-items: center;
   flex-direction: row;
   width: auto;
-  background-color: aliceblue;
 }
 
 .input {
-  margin-left: 25px;
+  margin-left: 35px;
   margin-right: 20px;
   border: 1px solid black;
   border-radius: 10px;
