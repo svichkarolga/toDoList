@@ -112,7 +112,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  fetchTasks,
+  fetchTask,
   addTask,
   updateTask,
   deleteTask,
@@ -120,18 +120,17 @@ import {
 import { selectTasks } from "../../redux/tasks/selectors";
 import Column from "../Column/Column.jsx";
 import styles from "./Board.module.css";
-import { nanoid } from "nanoid";
 
 const Board = ({ searchQuery }) => {
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasks); // Отримуємо таски з Redux
 
   useEffect(() => {
-    dispatch(fetchTasks()); // Завантажуємо таски при завантаженні сторінки
+    dispatch(fetchTask()); // Завантажуємо таски при завантаженні сторінки
   }, [dispatch]);
 
   const addTaskToColumn = (columnName, task) => {
-    const newTask = { ...task, id: nanoid(), columnName };
+    const newTask = { ...task, columnName };
     dispatch(addTask(newTask)); // ✅ Використовуємо Redux для додавання таску
   };
 
