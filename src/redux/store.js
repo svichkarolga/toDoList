@@ -16,8 +16,8 @@ import storage from "redux-persist/lib/storage";
 const tasksPersistConfig = {
   key: "tasks",
   storage,
-  blacklist: ["error", "selectedTask"],
-  // whitelist: ["items"], // Зберігаємо лише `items`
+  // blacklist: ["error", "selectedTask"],
+  whitelist: ["items"], // Зберігаємо лише `items`
 };
 
 const persistedTaskReducer = persistReducer(tasksPersistConfig, taskReducer);

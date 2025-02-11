@@ -20,34 +20,39 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchTask.fulfilled, (state, action) => {
-        state.items = Array.isArray(action.payload) ? action.payload : [];
+        if (Array.isArray(action.payload.data)) {
+          state.items = action.payload.data;
+        } else {
+          state.items = [];
+        }
       })
-      // .addCase(fetchTask.fulfilled, (state, action) => {
-      //   state.items = action.payload; // Оновлюємо список тасків
-      // })
       .addCase(fetchTask.rejected, (state, action) => {
-        state.error = action.payload;
+        state.error = action.payload.data;
       })
       .addCase(getTaskById.pending, (state) => {
         state.error = null;
       })
-      .addCase(getTaskById.fulfilled, (state, action) => {
-        state.selectedTask = action.payload;
-      })
+      // .addCase(getTaskById.fulfilled, (state, action) => {
+      //   state.selectedTask = action.payload;
+      // })
+      // .addCase(fetchTask.fulfilled, (state, action) => {
+      //   console.log("✅ Успішно завантажені таски:", action.payload);
+      //   state.items = Array.isArray(action.payload) ? action.payload : [];
+      // })
       .addCase(getTaskById.rejected, (state, action) => {
         state.error = action.payload;
       })
-      // .addCase(addTask.fulfilled, (state, action) => {
-      //   state.items.push(action.payload.data);
-      // })
       .addCase(addTask.fulfilled, (state, action) => {
-        if (!Array.isArray(state.items)) {
-          state.items = [];
-        }
-        if (action.payload?.data) {
-          state.items.push(action.payload.data);
-        }
+        state.items.push(action.payload.data);
       })
+      // .addCase(addTask.fulfilled, (state, action) => {
+      //   if (!Array.isArray(state.items)) {
+      //     state.items = [];
+      //   }
+      //   if (action.payload?.data) {
+      //     state.items.push(action.payload.data);
+      //   }
+      // })
       .addCase(updateTask.fulfilled, (state, action) => {
         console.log("Оновлений таск:", action.payload);
         const updatedTask = action.payload.data.task;
