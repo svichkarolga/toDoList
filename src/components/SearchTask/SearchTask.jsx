@@ -20,7 +20,7 @@ export const SearchForm = ({ onSubmit }) => {
           className={styles.input}
           type="text"
           name="topic"
-          placeholder="Enter a board ID or title of task here"
+          placeholder="Enter a task ID or title here"
         />
         <button className={styles.button}>Load</button>
       </form>
