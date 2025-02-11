@@ -38,12 +38,11 @@ const taskSlice = createSlice({
         state.items.push(action.payload.data);
       })
       .addCase(updateTask.fulfilled, (state, action) => {
-        const index = state.items.findIndex(
-          (task) => task._id === action.payload._id
+        console.log("Оновлений таск:", action.payload);
+        const updatedTask = action.payload.data.task;
+        state.items = state.items.map((task) =>
+          task._id === updatedTask._id ? updatedTask : task
         );
-        if (index !== -1) {
-          state.items[index] = action.payload;
-        }
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.items = state.items.filter(
@@ -52,8 +51,7 @@ const taskSlice = createSlice({
       })
       .addCase(deleteTask.rejected, (state, action) => {
         if (action.payload?.status === 404) {
-          // Якщо таск не знайдено (404), видаляємо його зі стану
-          const taskId = action.meta.arg; // Отримуємо ID таску з аргументів
+          const taskId = action.meta.arg;
           state.items = state.items.filter((task) => task._id !== taskId);
         }
         state.error = action.payload;

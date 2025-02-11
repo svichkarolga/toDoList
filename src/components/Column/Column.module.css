@@ -11,8 +11,8 @@
 }
 
 .itemBox {
+  border-radius: 10px;
   margin: 10px 0px;
-  /* padding: 10px; */
   width: 100%;
   height: auto;
   border: 1px solid gray;
@@ -35,6 +35,10 @@
   color: black;
   font-size: 20px;
   padding: 0 5px 0 5px;
+}
+.text {
+  font-size: 10px;
+  color: black;
 }
 
 .id {

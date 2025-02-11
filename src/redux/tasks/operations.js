@@ -19,15 +19,7 @@ export const getTaskById = createAsyncThunk(
   "task/getById",
   async (taskId, thunkAPI) => {
     try {
-      const taskData = {
-        task,
-        description,
-      };
-      const response = await axios.get(`/task/${taskId}`, taskData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.get(`/task/${taskId}`);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -59,14 +51,17 @@ export const addTask = createAsyncThunk(
 export const updateTask = createAsyncThunk(
   "task/updateTask",
   async ({ taskId, updatedData }, thunkAPI) => {
-    console.log(_id);
     try {
       const response = await axios.patch(`/task/${taskId}`, updatedData, {
         headers: { "Content-Type": "application/json" },
       });
       return response.data;
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      console.error(
+        "Помилка при оновленні таску:",
+        e.response?.data || e.message
+      );
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
     }
   }
 );

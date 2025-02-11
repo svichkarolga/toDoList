@@ -12,7 +12,7 @@ import styles from "./Board.module.css";
 
 const Board = ({ searchQuery }) => {
   const dispatch = useDispatch();
-  const tasks = useSelector(selectTasks); // Отримуємо таски з Redux
+  const tasks = useSelector(selectTasks);
 
   useEffect(() => {
     dispatch(fetchTask()); // Завантажуємо таски при завантаженні сторінки
@@ -24,7 +24,20 @@ const Board = ({ searchQuery }) => {
   };
 
   const handleEditTask = (updatedTask) => {
-    dispatch(updateTask({ taskId: updatedTask.id, updatedData: updatedTask }));
+    if (!updatedTask.id) {
+      console.error("Помилка: відсутній `id` у таску для оновлення.");
+      return;
+    }
+    dispatch(
+      updateTask({
+        taskId: updatedTask.id,
+        updatedData: {
+          title: updatedTask.title,
+          description: updatedTask.description,
+          columnName: updatedTask.columnName,
+        },
+      })
+    );
   };
 
   const handleDeleteTask = (taskId) => {
@@ -32,22 +45,44 @@ const Board = ({ searchQuery }) => {
   };
 
   const handleDropTask = (task, targetColumnName) => {
-    const updatedTask = { ...task, columnName: targetColumnName };
-    dispatch(updateTask({ taskId: task.id, updatedData: updatedTask }));
+    console.log(`Переміщення таску ${task._id} у колонку ${targetColumnName}`);
+    if (!task?._id) {
+      console.error("Помилка: відсутній `_id` у таску при перетягуванні.");
+      return;
+    }
+    const updatedData = { columnName: targetColumnName }; // 🔥 Передаємо тільки зміни
+    dispatch(
+      updateTask({
+        taskId: task._id,
+        updatedData: { columnName: targetColumnName },
+      })
+    );
   };
 
   const handleDragStart = (event, task) => {
-    event.dataTransfer.setData("task", JSON.stringify(task));
+    event.dataTransfer.setData("application/json", JSON.stringify(task)); // 🔥 Тип "application/json"
   };
 
-  // Фільтрація тасків за колонками
+  const filteredTasks = tasks.filter((task) =>
+    searchQuery
+      ? (task.title &&
+          task.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (task._id && task._id === searchQuery)
+      : true
+  );
   const columns = [
-    { name: "ToDo", tasks: tasks.filter((task) => task.columnName === "ToDo") },
+    {
+      name: "ToDo",
+      tasks: filteredTasks.filter((task) => task.columnName === "ToDo"),
+    },
     {
       name: "In Progress",
-      tasks: tasks.filter((task) => task.columnName === "In Progress"),
+      tasks: filteredTasks.filter((task) => task.columnName === "In Progress"),
     },
-    { name: "Done", tasks: tasks.filter((task) => task.columnName === "Done") },
+    {
+      name: "Done",
+      tasks: filteredTasks.filter((task) => task.columnName === "Done"),
+    },
   ];
 
   return (

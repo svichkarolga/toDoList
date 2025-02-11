@@ -34,5 +34,8 @@ export const store = configureStore({
     }),
   devTools: process.env.NODE_ENV === "development",
 });
+store.subscribe(() => {
+  console.log("🔄 Стан Redux оновлено:", store.getState());
+});
 
 export const persistor = persistStore(store);
