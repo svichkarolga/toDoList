@@ -63,13 +63,22 @@ const Board = ({ searchQuery }) => {
     event.dataTransfer.setData("application/json", JSON.stringify(task)); // 🔥 Тип "application/json"
   };
 
-  const filteredTasks = tasks.filter((task) =>
-    searchQuery
-      ? (task.title &&
-          task.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (task._id && task._id === searchQuery)
-      : true
-  );
+  // const filteredTasks = tasks.filter((task) =>
+  //   searchQuery
+  //     ? (task.title &&
+  //         task.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+  //       (task._id && task._id === searchQuery)
+  //     : true
+  // );
+  const filteredTasks = Array.isArray(tasks)
+    ? tasks.filter((task) =>
+        searchQuery
+          ? (task.title &&
+              task.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (task._id && task._id === searchQuery)
+          : true
+      )
+    : [];
   const columns = [
     {
       name: "ToDo",

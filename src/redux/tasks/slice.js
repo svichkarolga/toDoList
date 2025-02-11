@@ -20,8 +20,11 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchTask.fulfilled, (state, action) => {
-        state.items = action.payload; // Оновлюємо список тасків
+        state.items = Array.isArray(action.payload) ? action.payload : [];
       })
+      // .addCase(fetchTask.fulfilled, (state, action) => {
+      //   state.items = action.payload; // Оновлюємо список тасків
+      // })
       .addCase(fetchTask.rejected, (state, action) => {
         state.error = action.payload;
       })
@@ -34,8 +37,16 @@ const taskSlice = createSlice({
       .addCase(getTaskById.rejected, (state, action) => {
         state.error = action.payload;
       })
+      // .addCase(addTask.fulfilled, (state, action) => {
+      //   state.items.push(action.payload.data);
+      // })
       .addCase(addTask.fulfilled, (state, action) => {
-        state.items.push(action.payload.data);
+        if (!Array.isArray(state.items)) {
+          state.items = [];
+        }
+        if (action.payload?.data) {
+          state.items.push(action.payload.data);
+        }
       })
       .addCase(updateTask.fulfilled, (state, action) => {
         console.log("Оновлений таск:", action.payload);
