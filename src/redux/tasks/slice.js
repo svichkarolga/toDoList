@@ -35,20 +35,28 @@ const taskSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(addTask.fulfilled, (state, action) => {
-        state.items.push(action.payload);
-      })
-      .addCase(deleteTask.fulfilled, (state, action) => {
-        state.items = state.items.filter(
-          (task) => task.id !== action.payload.id
-        );
+        state.items.push(action.payload.data);
       })
       .addCase(updateTask.fulfilled, (state, action) => {
         const index = state.items.findIndex(
-          (task) => task.id === action.payload.id
+          (task) => task._id === action.payload._id
         );
         if (index !== -1) {
           state.items[index] = action.payload;
         }
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.items = state.items.filter(
+          (task) => task._id !== action.payload._id
+        );
+      })
+      .addCase(deleteTask.rejected, (state, action) => {
+        if (action.payload?.status === 404) {
+          // Якщо таск не знайдено (404), видаляємо його зі стану
+          const taskId = action.meta.arg; // Отримуємо ID таску з аргументів
+          state.items = state.items.filter((task) => task._id !== taskId);
+        }
+        state.error = action.payload;
       });
   },
 });

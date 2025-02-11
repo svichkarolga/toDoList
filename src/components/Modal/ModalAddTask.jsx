@@ -50,13 +50,13 @@ const StyledSaveButton = styled(Button)({
 });
 
 const ModalAdd = ({ open, onClose, onSave }) => {
-  const [task, setTask] = useState("");
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSave = () => {
-    if (task && description) {
-      onSave(task, description);
-      setTask("");
+    if (title && description) {
+      onSave(title, description);
+      setTitle("");
       setDescription("");
       onClose();
     }
@@ -71,11 +71,11 @@ const ModalAdd = ({ open, onClose, onSave }) => {
       <StyledDialogTitle>Add New Task</StyledDialogTitle>
       <Box sx={{ padding: "0 20px" }}>
         <TextField
-          label="Task"
+          label="Title"
           fullWidth
           margin="normal"
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <TextField
           label="Description"

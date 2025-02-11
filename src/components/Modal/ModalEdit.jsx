@@ -76,7 +76,7 @@ const ModalEdit = ({ open, onClose, onSave, task }) => {
       <StyledDialogTitle>Edit Task</StyledDialogTitle>
       <Box sx={{ padding: "0 20px" }}>
         <TextField
-          label="Task"
+          label="Title"
           fullWidth
           margin="normal"
           value={title}

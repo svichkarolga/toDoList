@@ -20,10 +20,14 @@ export const getTaskById = createAsyncThunk(
   async (taskId, thunkAPI) => {
     try {
       const taskData = {
-        title,
+        task,
         description,
       };
-      const response = await axios.get(`/task/${taskId}`);
+      const response = await axios.get(`/task/${taskId}`, taskData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -39,7 +43,27 @@ export const addTask = createAsyncThunk(
         title,
         description,
       };
-      const response = await axios.post("/task", taskData);
+      const response = await axios.post("/task", taskData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (e) {
+      console.error("Помилка при додаванні таску:");
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+export const updateTask = createAsyncThunk(
+  "task/updateTask",
+  async ({ taskId, updatedData }, thunkAPI) => {
+    console.log(_id);
+    try {
+      const response = await axios.patch(`/task/${taskId}`, updatedData, {
+        headers: { "Content-Type": "application/json" },
+      });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -50,21 +74,10 @@ export const addTask = createAsyncThunk(
 export const deleteTask = createAsyncThunk(
   "task/deleteTask",
   async (taskId, thunkAPI) => {
+    console.log(taskId);
     try {
       await axios.delete(`/task/${taskId}`);
-      return { id: taskId };
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const updateTask = createAsyncThunk(
-  "task/updateTask",
-  async ({ taskId, updatedData }, thunkAPI) => {
-    try {
-      const response = await axios.patch(`/task/${taskId}`, updatedData);
-      return response.data;
+      return { _id: taskId };
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
