@@ -14,21 +14,6 @@ export const fetchTask = createAsyncThunk(
     }
   }
 );
-// export const fetchTask = createAsyncThunk(
-//   "tasks/fetchAll",
-//   async (_, thunkAPI) => {
-//     try {
-//       const response = await axios.get("/api/tasks"); // 🔥 Заміни на свій API
-//       console.log("📥 Отримані таски:", response.data);
-
-//       // Якщо response.data містить таски як окремі об'єкти, потрібно створити масив
-//       const tasksArray = Object.values(response.data); // Перетворюємо в масив
-//       return tasksArray;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.response?.data || "Помилка запиту");
-//     }
-//   }
-// );
 
 export const getTaskById = createAsyncThunk(
   "task/getById",
@@ -57,7 +42,7 @@ export const addTask = createAsyncThunk(
       });
       return response.data;
     } catch (e) {
-      console.error("Помилка при додаванні таску:");
+      console.error("task is not added");
       return thunkAPI.rejectWithValue(e.response?.data || e.message);
     }
   }
@@ -72,10 +57,6 @@ export const updateTask = createAsyncThunk(
       });
       return response.data;
     } catch (e) {
-      console.error(
-        "Помилка при оновленні таску:",
-        e.response?.data || e.message
-      );
       return thunkAPI.rejectWithValue(e.response?.data || e.message);
     }
   }

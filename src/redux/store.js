@@ -12,12 +12,10 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-// Конфігурація для `redux-persist`
 const tasksPersistConfig = {
   key: "tasks",
   storage,
-  // blacklist: ["error", "selectedTask"],
-  whitelist: ["items"], // Зберігаємо лише `items`
+  whitelist: ["items"],
 };
 
 const persistedTaskReducer = persistReducer(tasksPersistConfig, taskReducer);
@@ -33,9 +31,6 @@ export const store = configureStore({
       },
     }),
   devTools: process.env.NODE_ENV === "development",
-});
-store.subscribe(() => {
-  console.log("🔄 Стан Redux оновлено:", store.getState());
 });
 
 export const persistor = persistStore(store);

@@ -32,29 +32,13 @@ const taskSlice = createSlice({
       .addCase(getTaskById.pending, (state) => {
         state.error = null;
       })
-      // .addCase(getTaskById.fulfilled, (state, action) => {
-      //   state.selectedTask = action.payload;
-      // })
-      // .addCase(fetchTask.fulfilled, (state, action) => {
-      //   console.log("✅ Успішно завантажені таски:", action.payload);
-      //   state.items = Array.isArray(action.payload) ? action.payload : [];
-      // })
       .addCase(getTaskById.rejected, (state, action) => {
         state.error = action.payload;
       })
       .addCase(addTask.fulfilled, (state, action) => {
         state.items.push(action.payload.data);
       })
-      // .addCase(addTask.fulfilled, (state, action) => {
-      //   if (!Array.isArray(state.items)) {
-      //     state.items = [];
-      //   }
-      //   if (action.payload?.data) {
-      //     state.items.push(action.payload.data);
-      //   }
-      // })
       .addCase(updateTask.fulfilled, (state, action) => {
-        console.log("Оновлений таск:", action.payload);
         const updatedTask = action.payload.data.task;
         state.items = state.items.map((task) =>
           task._id === updatedTask._id ? updatedTask : task

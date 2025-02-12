@@ -15,7 +15,7 @@ const Board = ({ searchQuery }) => {
   const tasks = useSelector(selectTasks);
 
   useEffect(() => {
-    dispatch(fetchTask()); // Завантажуємо таски при завантаженні сторінки
+    dispatch(fetchTask());
   }, [dispatch]);
 
   const addTaskToColumn = (columnName, task) => {
@@ -25,7 +25,7 @@ const Board = ({ searchQuery }) => {
 
   const handleEditTask = (updatedTask) => {
     if (!updatedTask.id) {
-      console.error("Помилка: відсутній `id` у таску для оновлення.");
+      console.error(" `id`is absent.");
       return;
     }
     dispatch(
@@ -45,12 +45,10 @@ const Board = ({ searchQuery }) => {
   };
 
   const handleDropTask = (task, targetColumnName) => {
-    console.log(`Переміщення таску ${task._id} у колонку ${targetColumnName}`);
     if (!task?._id) {
-      console.error("Помилка: відсутній `_id` у таску при перетягуванні.");
       return;
     }
-    const updatedData = { columnName: targetColumnName }; // 🔥 Передаємо тільки зміни
+    const updatedData = { columnName: targetColumnName };
     dispatch(
       updateTask({
         taskId: task._id,

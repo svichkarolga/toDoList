@@ -48,7 +48,6 @@ const Column = ({
 
   const handleSaveEditedTask = (updatedTask) => {
     if (!updatedTask._id) {
-      console.error("Помилка: відсутній `id`");
       return;
     }
     onEditTask({
