@@ -58,16 +58,9 @@ const Board = ({ searchQuery }) => {
   };
 
   const handleDragStart = (event, task) => {
-    event.dataTransfer.setData("application/json", JSON.stringify(task)); // 🔥 Тип "application/json"
+    event.dataTransfer.setData("application/json", JSON.stringify(task));
   };
 
-  // const filteredTasks = tasks.filter((task) =>
-  //   searchQuery
-  //     ? (task.title &&
-  //         task.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-  //       (task._id && task._id === searchQuery)
-  //     : true
-  // );
   const filteredTasks = Array.isArray(tasks)
     ? tasks.filter((task) =>
         searchQuery
